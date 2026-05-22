@@ -1,0 +1,26 @@
+{
+  "status": "planned",
+  "reviewedAt": "2026-05-22",
+  "results": [
+    {
+      "gateId": "production-identity",
+      "result": "draft-pass",
+      "evidence": "launch/release-gates/build-validation.md"
+    },
+    {
+      "gateId": "score-recovery",
+      "result": "pending-beta",
+      "evidence": "launch/release-gates/recovery-beta-evidence.md"
+    },
+    {
+      "gateId": "privacy-disclosure",
+      "result": "draft-pass",
+      "evidence": "launch/privacy/apple-app-privacy.json"
+    },
+    {
+      "gateId": "monitoring-readiness",
+      "result": "pending-runbook",
+      "evidence": "launch/runbooks/launch-monitoring-plan.json"
+    }
+  ]
+}

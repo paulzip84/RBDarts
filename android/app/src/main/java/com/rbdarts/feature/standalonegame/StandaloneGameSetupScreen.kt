@@ -21,7 +21,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun StandaloneGameSetupScreen(
-    viewModel: StandaloneGameViewModel = remember { StandaloneGameViewModel() }
+    viewModel: StandaloneGameViewModel = remember { StandaloneGameViewModel() },
+    footerContent: (@Composable () -> Unit)? = null
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -31,6 +32,11 @@ fun StandaloneGameSetupScreen(
     ) {
         item {
             Text("RBDarts", style = MaterialTheme.typography.headlineMedium)
+        }
+        footerContent?.let { content ->
+            item {
+                content()
+            }
         }
         item {
             OutlinedTextField(

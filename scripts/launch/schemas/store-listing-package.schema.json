@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rbdarts.app/schemas/store-listing-package.schema.json",
+  "title": "Store Listing Package",
+  "type": "object",
+  "required": ["platform", "locale", "appName", "shortDescription", "fullDescription", "category", "supportUrl", "privacyPolicyUrl", "releaseNotes", "reviewNotesStatus", "screenshotChecklist"],
+  "properties": {
+    "platform": { "enum": ["Apple App Store", "Google Play"] },
+    "locale": { "type": "string", "minLength": 2 },
+    "appName": { "type": "string", "minLength": 1 },
+    "shortDescription": { "type": "string", "minLength": 1 },
+    "fullDescription": { "type": "string", "minLength": 1 },
+    "category": { "type": "string", "minLength": 1 },
+    "keywordsOrTags": { "type": "array", "items": { "type": "string" } },
+    "supportUrl": { "type": "string", "format": "uri" },
+    "privacyPolicyUrl": { "type": "string", "format": "uri" },
+    "releaseNotes": { "type": "string", "minLength": 1 },
+    "reviewNotesStatus": { "enum": ["draft", "ready", "submitted"] },
+    "screenshotChecklist": { "type": "string", "minLength": 1 }
+  }
+}

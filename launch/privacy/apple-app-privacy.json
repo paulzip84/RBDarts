@@ -1,0 +1,30 @@
+{
+  "platform": "Apple App Store",
+  "reviewedAt": "2026-05-22",
+  "status": "draft",
+  "dataCategories": [
+    {
+      "name": "User ID",
+      "collected": true,
+      "linkedToUser": true,
+      "shared": false,
+      "purpose": "Authentication, account continuity, and user-owned match records."
+    },
+    {
+      "name": "Gameplay Content",
+      "collected": true,
+      "linkedToUser": true,
+      "shared": false,
+      "purpose": "Baseball darts scoring, league workflows, practice history, recovery, and stats."
+    },
+    {
+      "name": "Diagnostics",
+      "collected": true,
+      "linkedToUser": false,
+      "shared": false,
+      "purpose": "Crash analysis, performance monitoring, and stability improvement."
+    }
+  ],
+  "thirdPartyServices": ["Firebase", "Google Sign-In", "Facebook Login"],
+  "deletionPath": "https://rbdarts.app/account/delete"
+}

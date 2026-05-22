@@ -1,0 +1,9 @@
+{
+  "betaCycleId": "android-0.1.0-1-internal",
+  "platform": "Android",
+  "candidateId": "android-0.1.0-1-draft",
+  "status": "planned",
+  "testerCount": 0,
+  "deviceCoverage": ["current Android phone", "lower-memory Android phone", "tablet if supported"],
+  "journeysCovered": ["sso", "standalone scoring", "recovery", "privacy support links"]
+}

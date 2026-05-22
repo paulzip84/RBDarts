@@ -1,0 +1,14 @@
+{
+  "platform": "Google Play",
+  "locale": "en-US",
+  "appName": "RBDarts",
+  "shortDescription": "Secure baseball darts scoring, leagues, practice, and stats.",
+  "fullDescription": "RBDarts is a native baseball darts scorekeeping app for Android. Players can sign in with supported SSO providers, score standalone matches, manage league play, practice target innings, review summaries, and keep match data protected with production security controls.",
+  "category": "Sports",
+  "keywordsOrTags": ["darts", "baseball darts", "scorekeeper", "league", "practice"],
+  "supportUrl": "https://rbdarts.app/support",
+  "privacyPolicyUrl": "https://rbdarts.app/privacy",
+  "releaseNotes": "Initial launch candidate with standalone baseball darts scoring, league workflows, practice mode, stats, secure SSO, and privacy/support links.",
+  "reviewNotesStatus": "draft",
+  "screenshotChecklist": "launch/google-play/screenshots/screenshot-checklist.md"
+}

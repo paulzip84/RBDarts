@@ -8,8 +8,11 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+!.env.production.example
 GoogleService-Info.plist
 google-services.json
+ReleaseConfig.plist
+release_config.xml
 *.p8
 *.p12
 *.mobileprovision
@@ -34,6 +37,7 @@ build/
 out/
 *.class
 *.jar
+!android/gradle/wrapper/gradle-wrapper.jar
 *.iml
 .idea/
 
@@ -47,3 +51,14 @@ firebase/functions/node_modules/
 # Test and emulator state
 firebase/.emulators/
 *.lcov
+
+# Launch artifacts: keep evidence, never private credentials
+launch/**/credentials*
+launch/**/secrets*
+launch/**/private*
+launch/**/*.p8
+launch/**/*.p12
+launch/**/*.mobileprovision
+launch/**/*.keystore
+launch/**/*.jks
+launch/**/reviewer-password*

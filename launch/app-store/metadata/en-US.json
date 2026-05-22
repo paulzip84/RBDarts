@@ -1,0 +1,14 @@
+{
+  "platform": "Apple App Store",
+  "locale": "en-US",
+  "appName": "RBDarts",
+  "shortDescription": "Baseball darts scoring for casual matches, league play, practice, and stats.",
+  "fullDescription": "RBDarts helps darts players run baseball darts matches with secure sign-in, clear scoring, correction workflows, league support, practice sessions, and summary stats. The native iOS app is built for quick score entry, stable recovery during active matches, and privacy-first launch behavior.",
+  "category": "Sports",
+  "keywordsOrTags": ["darts", "baseball darts", "scorekeeper", "league", "practice"],
+  "supportUrl": "https://rbdarts.app/support",
+  "privacyPolicyUrl": "https://rbdarts.app/privacy",
+  "releaseNotes": "Initial launch candidate with standalone baseball darts scoring, league workflows, practice mode, stats, secure SSO, and privacy/support links.",
+  "reviewNotesStatus": "draft",
+  "screenshotChecklist": "launch/app-store/screenshots/screenshot-checklist.md"
+}

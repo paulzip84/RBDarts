@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rbdarts.app/schemas/release-gate.schema.json",
+  "title": "Release Gate Catalog",
+  "type": "object",
+  "required": ["gates"],
+  "properties": {
+    "gates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["gateId", "name", "category", "severityIfFailed", "owner", "evidenceRequired", "blockingRule"],
+        "properties": {
+          "gateId": { "type": "string" },
+          "name": { "type": "string" },
+          "category": { "type": "string" },
+          "severityIfFailed": { "enum": ["critical", "high", "medium", "low"] },
+          "owner": { "type": "string" },
+          "evidenceRequired": { "type": "string" },
+          "blockingRule": { "type": "string" }
+        }
+      }
+    }
+  }
+}

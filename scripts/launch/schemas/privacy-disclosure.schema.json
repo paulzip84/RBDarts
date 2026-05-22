@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rbdarts.app/schemas/privacy-disclosure.schema.json",
+  "title": "Privacy Disclosure",
+  "type": "object",
+  "required": ["platform", "reviewedAt", "status", "dataCategories", "thirdPartyServices", "deletionPath"],
+  "properties": {
+    "platform": { "enum": ["Apple App Store", "Google Play"] },
+    "reviewedAt": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["draft", "ready", "needsRevision", "blocked"] },
+    "dataCategories": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "collected", "linkedToUser", "shared", "purpose"],
+        "properties": {
+          "name": { "type": "string" },
+          "collected": { "type": "boolean" },
+          "linkedToUser": { "type": "boolean" },
+          "shared": { "type": "boolean" },
+          "purpose": { "type": "string" }
+        }
+      }
+    },
+    "thirdPartyServices": { "type": "array", "items": { "type": "string" } },
+    "deletionPath": { "type": "string", "minLength": 1 }
+  }
+}

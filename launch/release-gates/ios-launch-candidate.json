@@ -1,0 +1,12 @@
+{
+  "candidateId": "ios-0.1.0-1-draft",
+  "platform": "iOS",
+  "appVersion": "0.1.0",
+  "buildNumber": "1",
+  "bundleOrApplicationId": "com.rbdarts.app",
+  "releaseChannel": "beta",
+  "configurationProfile": "production",
+  "readinessStatus": "betaReady",
+  "gateResultFile": "launch/release-gates/build-validation.md",
+  "blockingIssueIds": []
+}

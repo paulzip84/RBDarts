@@ -4,9 +4,14 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-    id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
+}
+
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+} else {
+    logger.lifecycle("Skipping Google Services plugin because google-services.json is not present.")
 }
 
 android {
@@ -22,6 +27,29 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            providers.gradleProperty("RBDARTS_RELEASE_STORE_FILE").orNull?.let {
+                storeFile = file(it)
+            }
+            storePassword = providers.gradleProperty("RBDARTS_RELEASE_STORE_PASSWORD").orNull
+            keyAlias = providers.gradleProperty("RBDARTS_RELEASE_KEY_ALIAS").orNull
+            keyPassword = providers.gradleProperty("RBDARTS_RELEASE_KEY_PASSWORD").orNull
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     buildFeatures {
         compose = true
     }
@@ -29,6 +57,16 @@ android {
     packaging {
         resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
