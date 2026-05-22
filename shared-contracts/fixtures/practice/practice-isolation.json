@@ -1,0 +1,23 @@
+{
+  "name": "practice-isolation",
+  "playerId": "player-a",
+  "target": 5,
+  "attemptScores": [0, 4, 5, 9, 5],
+  "officialBefore": {
+    "gamesPlayed": 4,
+    "totalScore": 168,
+    "average": 42
+  },
+  "expectedPractice": {
+    "attempts": 5,
+    "average": 4.6,
+    "bestScore": 9,
+    "zeroCount": 1,
+    "nineCount": 1
+  },
+  "expectedOfficialAfter": {
+    "gamesPlayed": 4,
+    "totalScore": 168,
+    "average": 42
+  }
+}

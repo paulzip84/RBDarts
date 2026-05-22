@@ -1,0 +1,12 @@
+{
+  "name": "handicap-rounding",
+  "higherAverageSum": 72.0,
+  "lowerAverageSum": 63.4,
+  "handicapPercent": 80,
+  "expected": {
+    "nearest": 7,
+    "floor": 6,
+    "ceiling": 7,
+    "decimal": 6.88
+  }
+}

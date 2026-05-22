@@ -1,0 +1,23 @@
+{
+  "name": "apply-correction",
+  "before": {
+    "gameId": "game-1",
+    "inningScoreId": "score-7",
+    "playerId": "player-a",
+    "inningNumber": 7,
+    "score": 2,
+    "playerTotal": 31
+  },
+  "correction": {
+    "editedByUserId": "league-manager-1",
+    "editedByRole": "LeagueManager",
+    "reason": "Scorekeeper entered the wrong target result.",
+    "previousValue": 2,
+    "newValue": 7
+  },
+  "expected": {
+    "playerTotal": 36,
+    "auditStatus": "applied",
+    "affectedRecords": ["game-1", "player-a", "standings"]
+  }
+}

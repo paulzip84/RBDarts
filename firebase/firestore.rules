@@ -1,0 +1,180 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function roleDoc(leagueId) {
+      return /databases/$(database)/documents/leagues/$(leagueId)/roles/$(request.auth.uid);
+    }
+
+    function leagueRole(leagueId) {
+      return signedIn() && exists(roleDoc(leagueId))
+        ? get(roleDoc(leagueId)).data.role
+        : null;
+    }
+
+    function leagueMember(leagueId) {
+      return leagueRole(leagueId) in [
+        "LeagueManager",
+        "TeamManager",
+        "Scorekeeper",
+        "Player",
+        "Viewer",
+        "Admin"
+      ];
+    }
+
+    function leagueManager(leagueId) {
+      return leagueRole(leagueId) in ["LeagueManager", "Admin"];
+    }
+
+    function canScore(leagueId) {
+      return leagueRole(leagueId) in ["LeagueManager", "TeamManager", "Scorekeeper", "Admin"];
+    }
+
+    function validScoreData() {
+      return request.resource.data.score is int
+        && request.resource.data.score >= 0
+        && request.resource.data.score <= 9
+        && request.resource.data.target == request.resource.data.inningNumber;
+    }
+
+    function notLocked() {
+      return !("lockedAt" in resource.data)
+        && !(resource.data.status in ["locked", "finalized", "corrected", "voided"]);
+    }
+
+    match /users/{userId} {
+      allow read: if isSelf(userId);
+      allow create: if isSelf(userId)
+        && !("accountStatus" in request.resource.data.keys())
+        && !("admin" in request.resource.data.keys());
+      allow update: if isSelf(userId)
+        && !request.resource.data.diff(resource.data).changedKeys().hasAny(["accountStatus", "admin"]);
+      allow delete: if false;
+    }
+
+    match /players/{playerId} {
+      allow read: if signedIn();
+      allow create, update: if signedIn()
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() > 0;
+      allow delete: if false;
+    }
+
+    match /practiceAttempts/{practiceAttemptId} {
+      allow read: if signedIn()
+        && (resource.data.userId == request.auth.uid || resource.data.linkedUserId == request.auth.uid);
+      allow create: if signedIn()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.score is int
+        && request.resource.data.score >= 0
+        && request.resource.data.score <= 9
+        && request.resource.data.target is int
+        && request.resource.data.target > 0
+        && !("official" in request.resource.data);
+      allow update, delete: if false;
+    }
+
+    match /leagues/{leagueId} {
+      allow read: if leagueMember(leagueId);
+      allow create: if signedIn()
+        && request.resource.data.createdByUserId == request.auth.uid;
+      allow update: if leagueManager(leagueId)
+        && !request.resource.data.diff(resource.data).changedKeys().hasAny([
+          "derivedStandings",
+          "officialAverages"
+        ]);
+      allow delete: if false;
+
+      match /roles/{roleAssignmentId} {
+        allow read: if leagueManager(leagueId)
+          || (signedIn() && resource.data.userId == request.auth.uid)
+          || roleAssignmentId == request.auth.uid;
+        allow create, update, delete: if leagueManager(leagueId)
+          && request.resource.data.userId != request.auth.uid;
+      }
+
+      match /teams/{teamId} {
+        allow read: if leagueMember(leagueId);
+        allow create, update: if leagueManager(leagueId);
+        allow delete: if false;
+      }
+
+      match /matches/{matchId} {
+        allow read: if leagueMember(leagueId);
+        allow create: if canScore(leagueId);
+        allow update: if canScore(leagueId)
+          && !request.resource.data.diff(resource.data).changedKeys().hasAny([
+            "awayTeamMatchPoints",
+            "homeTeamMatchPoints",
+            "awayTeamAdjustedTotal",
+            "homeTeamAdjustedTotal",
+            "matchBonusWinnerTeamId",
+            "finalizedAt"
+          ]);
+        allow delete: if false;
+
+        match /games/{gameId} {
+          allow read: if leagueMember(leagueId);
+          allow create: if canScore(leagueId);
+          allow update: if canScore(leagueId)
+            && notLocked()
+            && !request.resource.data.diff(resource.data).changedKeys().hasAny([
+              "winningTeamId",
+              "awayTeamRawScore",
+              "homeTeamRawScore",
+              "awayTeamAdjustedScore",
+              "homeTeamAdjustedScore",
+              "lockedAt",
+              "finalizedAt"
+            ]);
+          allow delete: if false;
+
+          match /inningScores/{inningScoreId} {
+            allow read: if leagueMember(leagueId);
+            allow create, update: if canScore(leagueId) && validScoreData();
+            allow delete: if false;
+          }
+        }
+      }
+
+      match /corrections/{correctionId} {
+        allow read: if leagueMember(leagueId);
+        allow create: if canScore(leagueId)
+          && request.resource.data.reason is string
+          && request.resource.data.reason.size() > 0
+          && request.resource.data.previousValue is int
+          && request.resource.data.newValue is int
+          && request.resource.data.newValue >= 0
+          && request.resource.data.newValue <= 9
+          && request.resource.data.status == "requested";
+        allow update: if leagueManager(leagueId)
+          && resource.data.status in ["requested", "approved"]
+          && request.resource.data.status in ["approved", "rejected", "applied"];
+        allow delete: if false;
+      }
+
+      match /stats/{statsDocId} {
+        allow read: if leagueMember(leagueId);
+        allow write: if false;
+      }
+
+      match /summaries/{summaryId} {
+        allow read: if leagueMember(leagueId);
+        allow write: if false;
+      }
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

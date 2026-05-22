@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="firebase_project_id">replace-with-firebase-project-id</string>
+    <string name="google_web_client_id">replace-with-google-web-client-id</string>
+    <string name="facebook_app_id">replace-with-facebook-app-id</string>
+    <string name="fb_login_protocol_scheme">fb-replace-with-facebook-app-id</string>
+</resources>

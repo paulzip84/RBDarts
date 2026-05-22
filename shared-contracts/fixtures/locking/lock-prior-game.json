@@ -1,0 +1,9 @@
+{
+  "name": "lock-prior-game",
+  "games": [
+    { "gameId": "game-1", "gameNumber": 1, "status": "complete" },
+    { "gameId": "game-2", "gameNumber": 2, "status": "setup" }
+  ],
+  "whenStartingGameNumber": 2,
+  "expectedLockedGameIds": ["game-1"]
+}

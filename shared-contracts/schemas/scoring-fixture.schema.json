@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rbdarts.local/schemas/scoring-fixture.schema.json",
+  "title": "RBDarts scoring fixture",
+  "type": "object",
+  "required": ["name", "regulationInnings", "extraInningsEnabled", "participants", "expected"],
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "regulationInnings": { "type": "integer", "minimum": 1, "default": 9 },
+    "extraInningsEnabled": { "type": "boolean" },
+    "participants": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "displayName", "scores"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "displayName": { "type": "string", "minLength": 1 },
+          "average": { "type": "number", "minimum": 0 },
+          "scores": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "integer", "minimum": 0, "maximum": 9 }
+          }
+        }
+      }
+    },
+    "expected": {
+      "type": "object",
+      "required": ["totals", "winnerIds", "margin", "inningsPlayed"],
+      "properties": {
+        "totals": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        },
+        "winnerIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "margin": { "type": "integer", "minimum": 0 },
+        "inningsPlayed": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

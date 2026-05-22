@@ -1,0 +1,49 @@
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*.log
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+GoogleService-Info.plist
+google-services.json
+*.p8
+*.p12
+*.mobileprovision
+*.keystore
+*.jks
+local.properties
+firebase-debug.log
+
+# Swift / Xcode
+DerivedData/
+.build/
+*.swiftpm/
+Packages/
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+
+# Android / Kotlin
+.gradle/
+build/
+out/
+*.class
+*.jar
+*.iml
+.idea/
+
+# Node / Firebase Functions
+node_modules/
+dist/
+coverage/
+firebase/functions/lib/
+firebase/functions/node_modules/
+
+# Test and emulator state
+firebase/.emulators/
+*.lcov

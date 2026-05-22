@@ -1,0 +1,26 @@
+{
+  "name": "extra-innings",
+  "regulationInnings": 9,
+  "extraInningsEnabled": true,
+  "participants": [
+    {
+      "id": "player-a",
+      "displayName": "Avery",
+      "scores": [5, 5, 5, 5, 5, 5, 5, 5, 5, 1]
+    },
+    {
+      "id": "player-b",
+      "displayName": "Blake",
+      "scores": [4, 4, 4, 4, 4, 4, 4, 4, 9, 2]
+    }
+  ],
+  "expected": {
+    "totals": {
+      "player-a": 46,
+      "player-b": 47
+    },
+    "winnerIds": ["player-b"],
+    "margin": 1,
+    "inningsPlayed": 10
+  }
+}

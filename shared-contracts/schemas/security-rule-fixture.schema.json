@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rbdarts.local/schemas/security-rule-fixture.schema.json",
+  "title": "RBDarts security rule fixture",
+  "type": "object",
+  "required": ["name", "auth", "path", "operation", "expected"],
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "auth": {
+      "type": ["object", "null"],
+      "properties": {
+        "uid": { "type": "string" },
+        "leagueRoles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "enum": ["LeagueManager", "TeamManager", "Scorekeeper", "Player", "Viewer", "Admin"]
+            }
+          }
+        }
+      }
+    },
+    "path": { "type": "string", "pattern": "^/" },
+    "operation": { "enum": ["get", "list", "create", "update", "delete"] },
+    "expected": { "enum": ["allow", "deny"] }
+  }
+}

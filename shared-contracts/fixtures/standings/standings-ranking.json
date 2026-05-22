@@ -1,0 +1,30 @@
+{
+  "name": "standings-ranking",
+  "teams": [
+    {
+      "teamId": "team-a",
+      "leaguePoints": 12,
+      "gamesWon": 6,
+      "pointDifferential": 24,
+      "totalAdjustedScore": 310,
+      "totalRawScore": 300
+    },
+    {
+      "teamId": "team-b",
+      "leaguePoints": 12,
+      "gamesWon": 6,
+      "pointDifferential": 12,
+      "totalAdjustedScore": 320,
+      "totalRawScore": 318
+    },
+    {
+      "teamId": "team-c",
+      "leaguePoints": 10,
+      "gamesWon": 5,
+      "pointDifferential": 40,
+      "totalAdjustedScore": 299,
+      "totalRawScore": 299
+    }
+  ],
+  "expectedOrder": ["team-a", "team-b", "team-c"]
+}

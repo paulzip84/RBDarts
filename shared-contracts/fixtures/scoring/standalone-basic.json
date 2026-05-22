@@ -1,0 +1,26 @@
+{
+  "name": "standalone-basic",
+  "regulationInnings": 9,
+  "extraInningsEnabled": true,
+  "participants": [
+    {
+      "id": "player-a",
+      "displayName": "Avery",
+      "scores": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      "id": "player-b",
+      "displayName": "Blake",
+      "scores": [0, 3, 3, 4, 4, 5, 6, 7, 8]
+    }
+  ],
+  "expected": {
+    "totals": {
+      "player-a": 45,
+      "player-b": 40
+    },
+    "winnerIds": ["player-a"],
+    "margin": 5,
+    "inningsPlayed": 9
+  }
+}
