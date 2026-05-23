@@ -22,6 +22,8 @@ SSO providers for authentication, and measurable performance and stability gates
   validation notes.
 - `specs/002-launch-mobile-apps/`: Speckit launch-readiness specification,
   plan, tasks, contracts, and quickstart.
+- `specs/003-android-material-you-ui/`: Android Material You redesign
+  specification, implementation tasks, tests, and launch evidence.
 
 ## Local Commands
 
@@ -74,6 +76,19 @@ ANDROID_HOME="$HOME/Library/Android/sdk" \
 The Android Google Services plugin is skipped when `android/app/google-services.json`
 is absent so local verification does not require committing Firebase secrets.
 
+Android Material You feature verification adds Compose UI test compilation and
+APK assembly:
+
+```bash
+cd android
+JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" \
+ANDROID_HOME="$HOME/Library/Android/sdk" \
+./gradlew testDebugUnitTest compileDebugAndroidTestKotlin lintDebug assembleDebug
+```
+
+The debug APK for local smoke testing is produced at
+`android/app/build/outputs/apk/debug/app-debug.apk`.
+
 iOS `xcodebuild` verification requires full Xcode, not only Command Line Tools.
 After installing Xcode, select it and run:
 
@@ -108,6 +123,20 @@ Start with `launch/INDEX.md` and
 templates and evidence records only; signed binaries, reviewer credentials,
 provider console exports, and store-account materials must stay in secure
 platform or CI storage.
+
+For the Android Material You workflow, use
+`specs/003-android-material-you-ui/quickstart.md` and capture screenshots from
+the loading, login, game type, players, seasons, handicaps, scoring, and settings
+screens before Play Store submission.
+
+For the focused Android login redesign, use
+`specs/004-login-page-redesign/quickstart.md`. The login screen must remain
+SSO-only: no email fields, password fields, or password reset language.
+
+For the Android load-screen visual redesign, use
+`specs/005-load-screen-redesign/quickstart.md`. The load screen uses the local
+optimized asset `android/app/src/main/res/drawable-nodpi/rbdarts_load_background.jpg`
+with a fallback to the existing vector mark.
 
 ## Speckit Workflow
 

@@ -4,9 +4,15 @@ Status: Draft, pending capture from signed Android release candidate.
 
 ## Required Scenes
 
-- Home and game setup with app name visible.
-- Standalone score entry with representative players.
-- Scorecard or final summary after a completed match.
+- Loading screen with RBDarts image, app name, and version/build visible.
+- Redesigned Login screen with RBDarts mark, `Welcome back`, and Google/Facebook SSO actions.
+- Authenticated Home dashboard with app sections visible.
+- Material You Game Type setup summary.
+- Player creation form with sample player data.
+- Season creation form with sample season data.
+- Player-level handicap management and scoring impact preview.
+- Robust Scoring screen with representative players and running totals.
+- Scorecard review or completion state after a completed match.
 - League setup or standings workflow.
 - Practice mode scoring workflow.
 - Stats summary or projection view.
@@ -23,3 +29,4 @@ Status: Draft, pending capture from signed Android release candidate.
 ## Evidence
 
 - Screenshot file names and device sizes will be recorded here before submission.
+- 005 load-screen smoke evidence is tracked in `specs/005-load-screen-redesign/evidence/load-screen-smoke.md`.
