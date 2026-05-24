@@ -1,0 +1,22 @@
+{
+  "name": "baseball-post20-tiebreakers",
+  "regulationInnings": 9,
+  "extraInningsEnabled": true,
+  "participants": [
+    { "id": "player-a", "displayName": "Avery", "kind": "player" },
+    { "id": "player-b", "displayName": "Blake", "kind": "player" }
+  ],
+  "expected": {
+    "totals": {},
+    "winnerIds": [],
+    "margin": 0,
+    "inningsPlayed": 20,
+    "needsExtraInning": true,
+    "currentTarget": 20
+  },
+  "post20Examples": {
+    "repeat20": 20,
+    "restartAt1": 1,
+    "bullseyeTiebreaker": 25
+  }
+}

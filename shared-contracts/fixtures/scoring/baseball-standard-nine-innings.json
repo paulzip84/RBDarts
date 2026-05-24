@@ -1,0 +1,37 @@
+{
+  "name": "baseball-standard-nine-innings",
+  "regulationInnings": 9,
+  "extraInningsEnabled": true,
+  "post20TieRule": "repeat20",
+  "dartsPerTurn": 3,
+  "participants": [
+    { "id": "player-a", "displayName": "Avery", "kind": "player" },
+    { "id": "player-b", "displayName": "Blake", "kind": "player" }
+  ],
+  "turns": [
+    {
+      "id": "a-4",
+      "inning": 4,
+      "target": 4,
+      "participantId": "player-a",
+      "teamId": null,
+      "playerId": "player-a",
+      "darts": [
+        { "index": 1, "target": 4, "landedNumber": 4, "ring": "single", "validity": "valid", "score": 1 },
+        { "index": 2, "target": 4, "landedNumber": 4, "ring": "triple", "validity": "valid", "score": 3 },
+        { "index": 3, "target": 4, "landedNumber": 5, "ring": "triple", "validity": "wrongNumber", "score": 0 }
+      ]
+    }
+  ],
+  "expected": {
+    "totals": {
+      "player-a": 4,
+      "player-b": 0
+    },
+    "winnerIds": [],
+    "margin": 0,
+    "inningsPlayed": 9,
+    "needsExtraInning": false,
+    "currentTarget": 1
+  }
+}

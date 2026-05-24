@@ -1,0 +1,19 @@
+{
+  "name": "baseball-correction-and-substitution",
+  "auth": {
+    "uid": "team-manager-user",
+    "leagueRoles": {
+      "league-1": ["TeamManager"]
+    }
+  },
+  "path": "/leagues/league-1/games/game-1/substitutions/sub-1",
+  "operation": "substitutePlayer",
+  "gameStatus": "scoring",
+  "correction": {
+    "originalValue": 0,
+    "correctedValue": 0,
+    "reasonProvided": true,
+    "affectedRecords": ["lineup-team-a", "sub-1"]
+  },
+  "expected": "allow"
+}

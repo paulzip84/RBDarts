@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rbdarts.app/schemas/beta-cycle.schema.json",
+  "title": "Beta Cycle",
+  "type": "object",
+  "required": ["betaCycleId", "platform", "candidateId", "testerCount", "deviceCoverage", "journeysCovered", "status"],
+  "properties": {
+    "betaCycleId": { "type": "string" },
+    "platform": { "enum": ["iOS", "Android"] },
+    "candidateId": { "type": "string" },
+    "testerCount": { "type": "integer", "minimum": 0 },
+    "deviceCoverage": { "type": "array", "items": { "type": "string" } },
+    "journeysCovered": { "type": "array", "items": { "type": "string" } },
+    "crashFreeSessionRate": { "type": "number", "minimum": 0, "maximum": 100 },
+    "status": { "enum": ["planned", "running", "complete", "blocked"] }
+  }
+}

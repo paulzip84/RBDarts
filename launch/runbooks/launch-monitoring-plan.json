@@ -1,0 +1,24 @@
+{
+  "monitoringPlanId": "rbdarts-0.1.0-first-release",
+  "reviewCadence": "Every business day during review, then twice daily for the first three public launch days.",
+  "supportOwner": "support-owner",
+  "engineeringOwner": "release-owner",
+  "escalationPath": "Support owner triages user reports, release owner assesses severity, engineering owner coordinates fix or rollback.",
+  "hotfixCriteria": "Critical crash, sign-in outage, scoring data loss, account deletion failure, or security/privacy incident.",
+  "rollbackCriteria": "Unrecoverable scoring data loss, widespread sign-in failure, severe policy issue, or unresolved critical crash trend.",
+  "signals": [
+    "Crash-free sessions",
+    "Sign-in failure rate",
+    "Score save failure rate",
+    "Cloud Functions error rate",
+    "Firestore denied writes",
+    "Support issue volume",
+    "Store review messages"
+  ],
+  "thresholds": {
+    "criticalCrash": "Any reproducible crash in sign-in, active scoring, recovery, or game completion.",
+    "signInFailureRate": "Investigate above 2 percent after excluding provider outages.",
+    "scoreSaveFailureRate": "Investigate any repeatable save failure.",
+    "supportVolume": "Investigate any cluster of three similar issues in one day."
+  }
+}

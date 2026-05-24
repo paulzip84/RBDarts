@@ -1,0 +1,9 @@
+{
+  "betaCycleId": "ios-0.1.0-1-internal",
+  "platform": "iOS",
+  "candidateId": "ios-0.1.0-1-draft",
+  "status": "planned",
+  "testerCount": 0,
+  "deviceCoverage": ["current iPhone", "older supported iPhone", "iPad if supported"],
+  "journeysCovered": ["sso", "standalone scoring", "recovery", "privacy support links"]
+}

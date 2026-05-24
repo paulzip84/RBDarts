@@ -1,0 +1,58 @@
+{
+  "gates": [
+    {
+      "gateId": "production-identity",
+      "name": "Production app identity reviewed",
+      "category": "build",
+      "severityIfFailed": "critical",
+      "owner": "release-owner",
+      "evidenceRequired": "Bundle/application id, version, build number, icon, and production config evidence",
+      "blockingRule": "Blocks beta and store submission"
+    },
+    {
+      "gateId": "secret-scan",
+      "name": "No committed secrets or signing materials",
+      "category": "security",
+      "severityIfFailed": "critical",
+      "owner": "release-owner",
+      "evidenceRequired": "Secret scan evidence and ignored private artifact confirmation",
+      "blockingRule": "Blocks beta, submission, and public release"
+    },
+    {
+      "gateId": "auth-smoke",
+      "name": "Authentication and reviewer access smoke test passed",
+      "category": "identity",
+      "severityIfFailed": "critical",
+      "owner": "release-owner",
+      "evidenceRequired": "Sign-in, cancellation, provider failure, sign-out, and reviewer access evidence",
+      "blockingRule": "Blocks store submission"
+    },
+    {
+      "gateId": "score-recovery",
+      "name": "Scoring and recovery smoke test passed",
+      "category": "stability",
+      "severityIfFailed": "critical",
+      "owner": "release-owner",
+      "evidenceRequired": "Score entry, restart, network loss, and final scorecard evidence",
+      "blockingRule": "Blocks store submission and public release"
+    },
+    {
+      "gateId": "privacy-disclosure",
+      "name": "Privacy disclosures match app behavior",
+      "category": "privacy",
+      "severityIfFailed": "critical",
+      "owner": "privacy-owner",
+      "evidenceRequired": "Apple privacy and Google data safety answers mapped to data inventory",
+      "blockingRule": "Blocks store submission and public release"
+    },
+    {
+      "gateId": "monitoring-readiness",
+      "name": "Launch monitoring and escalation ready",
+      "category": "monitoring",
+      "severityIfFailed": "high",
+      "owner": "release-owner",
+      "evidenceRequired": "Monitoring plan with thresholds, support owner, escalation, hotfix, and rollback criteria",
+      "blockingRule": "Blocks public release unless owner-deferred"
+    }
+  ]
+}

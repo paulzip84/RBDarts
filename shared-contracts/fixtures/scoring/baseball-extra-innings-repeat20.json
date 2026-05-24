@@ -1,0 +1,21 @@
+{
+  "name": "baseball-extra-innings-repeat20",
+  "regulationInnings": 9,
+  "extraInningsEnabled": true,
+  "post20TieRule": "repeat20",
+  "participants": [
+    { "id": "team-a", "displayName": "Team A", "kind": "player" },
+    { "id": "team-b", "displayName": "Team B", "kind": "player" }
+  ],
+  "expected": {
+    "totals": {
+      "team-a": 47,
+      "team-b": 48
+    },
+    "winnerIds": ["team-b"],
+    "margin": 1,
+    "inningsPlayed": 10,
+    "needsExtraInning": false,
+    "currentTarget": 10
+  }
+}

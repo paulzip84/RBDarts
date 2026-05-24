@@ -13,6 +13,18 @@ public struct DiagnosticEvent: Equatable, Sendable {
     public let attributes: [String: String]
 }
 
+public enum DiagnosticEventName {
+    public static let scoreEntryRejected = "score_entry_rejected"
+    public static let correctionRequested = "correction_requested"
+    public static let correctionRejected = "correction_rejected"
+    public static let correctionApplied = "correction_applied"
+    public static let gameLocked = "game_locked"
+    public static let gameUnlockRequested = "game_unlock_requested"
+    public static let substitutionApplied = "substitution_applied"
+    public static let baseballStatsViewed = "baseball_stats_viewed"
+    public static let baseballProjectionUnavailable = "baseball_projection_unavailable"
+}
+
 public protocol DiagnosticsReporting: Sendable {
     func record(_ event: DiagnosticEvent)
 }

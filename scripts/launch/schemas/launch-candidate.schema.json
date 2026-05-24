@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rbdarts.app/schemas/launch-candidate.schema.json",
+  "title": "Launch Candidate",
+  "type": "object",
+  "required": ["candidateId", "platform", "appVersion", "buildNumber", "bundleOrApplicationId", "releaseChannel", "configurationProfile", "readinessStatus", "gateResultFile"],
+  "properties": {
+    "candidateId": { "type": "string", "minLength": 1 },
+    "platform": { "enum": ["iOS", "Android"] },
+    "appVersion": { "type": "string", "minLength": 1 },
+    "buildNumber": { "type": "string", "minLength": 1 },
+    "bundleOrApplicationId": { "type": "string", "minLength": 1 },
+    "releaseChannel": { "enum": ["local", "beta", "review", "production"] },
+    "configurationProfile": { "enum": ["development", "staging", "production"] },
+    "readinessStatus": { "enum": ["draft", "betaReady", "submissionReady", "submitted", "approved", "released", "blocked"] },
+    "gateResultFile": { "type": "string", "minLength": 1 },
+    "blockingIssueIds": { "type": "array", "items": { "type": "string" } }
+  }
+}

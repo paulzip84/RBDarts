@@ -1,5 +1,5 @@
 <!-- SPECKIT START -->
-Current Speckit plan: `specs/001-baseball-darts-app/plan.md`
+Current Speckit plan: `specs/002-launch-mobile-apps/plan.md`
 
 For technologies, project structure, shell commands, and implementation
 constraints, read the current plan before making changes.

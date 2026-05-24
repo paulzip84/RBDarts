@@ -1,0 +1,19 @@
+{
+  "name": "baseball-locked-correction",
+  "auth": {
+    "uid": "manager-user",
+    "leagueRoles": {
+      "league-1": ["LeagueManager"]
+    }
+  },
+  "path": "/leagues/league-1/games/game-1/scores/score-1",
+  "operation": "correctScore",
+  "gameStatus": "locked",
+  "correction": {
+    "originalValue": 2,
+    "correctedValue": 3,
+    "reasonProvided": true,
+    "affectedRecords": ["score-1", "game-1"]
+  },
+  "expected": "allow"
+}
