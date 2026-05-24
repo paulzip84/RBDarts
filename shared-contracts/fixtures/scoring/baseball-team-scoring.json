@@ -1,0 +1,76 @@
+{
+  "name": "baseball-team-scoring",
+  "regulationInnings": 9,
+  "extraInningsEnabled": true,
+  "post20TieRule": "repeat20",
+  "participants": [
+    {
+      "id": "team-a",
+      "displayName": "Team A",
+      "kind": "team",
+      "teamId": "team-a",
+      "playerIds": ["player-1", "player-2", "player-3"],
+      "lineupOrder": ["player-1", "player-2", "player-3"]
+    },
+    {
+      "id": "team-b",
+      "displayName": "Team B",
+      "kind": "team",
+      "teamId": "team-b",
+      "playerIds": ["player-4", "player-5"],
+      "lineupOrder": ["player-4", "player-5"]
+    }
+  ],
+  "turns": [
+    {
+      "id": "a-1",
+      "inning": 1,
+      "target": 1,
+      "participantId": "team-a",
+      "teamId": "team-a",
+      "playerId": "player-1",
+      "darts": [
+        { "index": 1, "target": 1, "landedNumber": 1, "ring": "double", "validity": "valid", "score": 2 },
+        { "index": 2, "target": 1, "landedNumber": null, "ring": "miss", "validity": "valid", "score": 0 },
+        { "index": 3, "target": 1, "landedNumber": null, "ring": "miss", "validity": "valid", "score": 0 }
+      ]
+    },
+    {
+      "id": "a-2",
+      "inning": 1,
+      "target": 1,
+      "participantId": "team-a",
+      "teamId": "team-a",
+      "playerId": "player-2",
+      "darts": [
+        { "index": 1, "target": 1, "landedNumber": 1, "ring": "single", "validity": "valid", "score": 1 },
+        { "index": 2, "target": 1, "landedNumber": null, "ring": "miss", "validity": "valid", "score": 0 },
+        { "index": 3, "target": 1, "landedNumber": null, "ring": "miss", "validity": "valid", "score": 0 }
+      ]
+    },
+    {
+      "id": "a-3",
+      "inning": 1,
+      "target": 1,
+      "participantId": "team-a",
+      "teamId": "team-a",
+      "playerId": "player-3",
+      "darts": [
+        { "index": 1, "target": 1, "landedNumber": 1, "ring": "triple", "validity": "valid", "score": 3 },
+        { "index": 2, "target": 1, "landedNumber": null, "ring": "miss", "validity": "valid", "score": 0 },
+        { "index": 3, "target": 1, "landedNumber": null, "ring": "miss", "validity": "valid", "score": 0 }
+      ]
+    }
+  ],
+  "expected": {
+    "totals": {
+      "team-a": 6,
+      "team-b": 0
+    },
+    "winnerIds": [],
+    "margin": 0,
+    "inningsPlayed": 9,
+    "needsExtraInning": false,
+    "currentTarget": 1
+  }
+}

@@ -6,8 +6,9 @@ Status: Draft, pending capture from signed Android release candidate.
 
 - Loading screen with RBDarts image, app name, and version/build visible.
 - Redesigned Login screen with RBDarts mark, `Welcome back`, and Google/Facebook SSO actions.
-- Authenticated Home dashboard with app sections visible.
-- Material You Game Type setup summary.
+- Authenticated Home dashboard in the dark shell with the hamburger button visible.
+- Authenticated navigation drawer open with Home, Game Type, Players, Seasons, Handicaps, Scoring, Settings, and Sign Out visible.
+- Dark Game Type setup summary.
 - Player creation form with sample player data.
 - Season creation form with sample season data.
 - Player-level handicap management and scoring impact preview.
@@ -30,3 +31,4 @@ Status: Draft, pending capture from signed Android release candidate.
 
 - Screenshot file names and device sizes will be recorded here before submission.
 - 005 load-screen smoke evidence is tracked in `specs/005-load-screen-redesign/evidence/load-screen-smoke.md`.
+- 006 authenticated shell smoke evidence is tracked in `specs/006-reface-rest-android/evidence/authenticated-shell-smoke.md`.

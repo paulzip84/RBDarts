@@ -12,7 +12,14 @@ fun ScoringContextHeader(
 ) {
     RBDartsInfoCard(
         title = "Inning ${state.inning}, target ${state.target}",
-        body = "Active player: ${state.activeParticipant}. ${if (state.isRecovered) "Recovered active score session." else "Live score session."}",
+        body = buildString {
+            append("Active player: ${state.activeParticipant}. ")
+            state.leaderName?.let { leader ->
+                append("$leader leads by ${state.leadMargin}. ")
+            } ?: append("Game is tied. ")
+            append("${state.remainingInnings} regulation innings remaining. ")
+            append(if (state.isRecovered) "Recovered active score session." else "Live score session.")
+        },
         modifier = modifier
     )
 }

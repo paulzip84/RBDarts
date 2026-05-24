@@ -89,6 +89,17 @@ ANDROID_HOME="$HOME/Library/Android/sdk" \
 The debug APK for local smoke testing is produced at
 `android/app/build/outputs/apk/debug/app-debug.apk`.
 
+Baseball Darts rules verification for `specs/007-baseball-darts-rules/` uses
+the same Android gates and adds shared fixture coverage for dart-level scoring,
+team totals, extra innings, corrections, and analytics:
+
+```bash
+cd android
+JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" \
+ANDROID_HOME="$HOME/Library/Android/sdk" \
+./gradlew testDebugUnitTest compileDebugAndroidTestKotlin lintDebug assembleDebug
+```
+
 iOS `xcodebuild` verification requires full Xcode, not only Command Line Tools.
 After installing Xcode, select it and run:
 
@@ -137,6 +148,17 @@ For the Android load-screen visual redesign, use
 `specs/005-load-screen-redesign/quickstart.md`. The load screen uses the local
 optimized asset `android/app/src/main/res/drawable-nodpi/rbdarts_load_background.jpg`
 with a fallback to the existing vector mark.
+
+For the Android authenticated shell redesign, use
+`specs/006-reface-rest-android/quickstart.md`. The post-login app now uses a
+dark login-inspired shell with a top-left hamburger drawer instead of the old
+bottom navigation or navigation rail.
+
+For the Baseball Darts rules revamp, use
+`specs/007-baseball-darts-rules/quickstart.md`. The rule model now includes
+standard `0..9` inning scoring, dart-level source records, team aggregation,
+equal-turn extra innings, post-20 tiebreaker modes, authorized corrections, and
+derived scoreboard/analytics helpers.
 
 ## Speckit Workflow
 

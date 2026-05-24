@@ -29,9 +29,9 @@ class ScoringViewModel : ViewModel() {
     fun submitScore() {
         val entry = _uiState.value.scoreEntry
         val score = entry.pendingScore.toIntOrNull()
-        if (score == null || score !in 0..60) {
+        if (score == null || score !in 0..9) {
             _uiState.value = _uiState.value.copy(
-                scoreEntry = entry.copy(errorMessage = "Score must be between 0 and 60.")
+                scoreEntry = entry.copy(errorMessage = "Score must be between 0 and 9.")
             )
             return
         }
@@ -55,4 +55,4 @@ class ScoringViewModel : ViewModel() {
     }
 }
 
-fun isValidScoreInput(value: String): Boolean = value.toIntOrNull() in 0..60
+fun isValidScoreInput(value: String): Boolean = value.toIntOrNull() in 0..9

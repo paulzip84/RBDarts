@@ -7,8 +7,8 @@ import org.junit.Test
 class ScoringValidationUiTest {
     @Test
     fun scoreInputRejectsOutOfRangeValues() {
-        assertThat(isValidScoreInput("60")).isTrue()
-        assertThat(isValidScoreInput("61")).isFalse()
+        assertThat(isValidScoreInput("9")).isTrue()
+        assertThat(isValidScoreInput("10")).isFalse()
         assertThat(isValidScoreInput("abc")).isFalse()
     }
 }

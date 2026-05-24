@@ -85,6 +85,44 @@ enum class BaseballDartsGameType(val label: String, val supportingText: String) 
     Practice("Practice mode", "Track repeated attempts without affecting standings.")
 }
 
+enum class AuthenticatedNavigationAction {
+    Destination,
+    SignOut
+}
+
+data class AuthenticatedNavigationMenuItem(
+    val id: String,
+    val label: String,
+    val action: AuthenticatedNavigationAction = AuthenticatedNavigationAction.Destination,
+    val selected: Boolean = false,
+    val enabled: Boolean = true
+) {
+    val safeDiagnosticDestination: String =
+        when (id.lowercase()) {
+            "home" -> "home"
+            "gametype", "game_type", "game type" -> "game_type"
+            "players" -> "players"
+            "seasons" -> "seasons"
+            "handicaps" -> "handicaps"
+            "scoring" -> "scoring"
+            "settings" -> "settings"
+            "login", "signout", "sign_out" -> "login"
+            else -> "home"
+        }
+}
+
+data class AuthenticatedShellPresentationState(
+    val currentDestination: String = "home",
+    val drawerOpen: Boolean = false,
+    val menuItems: List<AuthenticatedNavigationMenuItem> = emptyList()
+) {
+    val selectedItem: AuthenticatedNavigationMenuItem? =
+        menuItems.firstOrNull { it.selected }
+
+    val hasBottomNavigation: Boolean = false
+    val hasNavigationRail: Boolean = false
+}
+
 data class GameTypeOption(
     val type: BaseballDartsGameType,
     val selected: Boolean = false,
@@ -157,8 +195,21 @@ data class ScoreEntryUiState(
     val isComplete: Boolean = false
 ) {
     val pendingScoreValue: Int? = pendingScore.toIntOrNull()
-    val canSubmit: Boolean = pendingScoreValue in 0..60 && !isComplete
+    val canSubmit: Boolean = pendingScoreValue in 0..9 && !isComplete
     val averageRawScore: Int = if (entries.isEmpty()) 0 else entries.values.flatten().average().roundToInt()
+    val remainingInnings: Int = (9 - inning).coerceAtLeast(0)
+    val leaderName: String?
+        get() {
+            val totals = participants.associate { it.name to adjustedTotalFor(it.name) }
+            val highest = totals.values.maxOrNull() ?: return null
+            val leaders = totals.filterValues { it == highest }.keys
+            return leaders.singleOrNull()
+        }
+    val leadMargin: Int
+        get() {
+            val totals = participants.map { adjustedTotalFor(it.name) }.sortedDescending()
+            return if (leaderName != null && totals.size > 1) totals[0] - totals[1] else 0
+        }
 
     fun rawTotalFor(playerName: String): Int = entries[playerName].orEmpty().sum()
 
@@ -168,21 +219,37 @@ data class ScoreEntryUiState(
     }
 
     fun withSubmittedScore(score: Int): ScoreEntryUiState {
-        if (score !in 0..60) {
-            return copy(errorMessage = "Score must be between 0 and 60.")
+        if (score !in 0..9) {
+            return copy(errorMessage = "Score must be between 0 and 9.")
         }
         val updatedEntries = entries + (activeParticipant to entries[activeParticipant].orEmpty().plus(score))
         val nextIndex = participants.indexOfFirst { it.name == activeParticipant }.let { if (it == -1) 0 else it }
         val nextParticipant = participants[(nextIndex + 1) % participants.size].name
-        val nextInning = if (nextParticipant == participants.first().name) (inning + 1).coerceAtMost(9) else inning
+        val completedRound = nextParticipant == participants.first().name
+        val participantTotals = participants.associate { participant ->
+            participant.name to updatedEntries[participant.name].orEmpty().sum() + participant.handicap
+        }
+        val topScore = participantTotals.values.maxOrNull() ?: 0
+        val tied = participantTotals.count { it.value == topScore } > 1
+        val regulationComplete = participants.all { updatedEntries[it.name].orEmpty().size >= 9 }
+        val extraInningComplete = inning > 9 && completedRound
+        val gameComplete = (regulationComplete && !tied) || (extraInningComplete && !tied)
+        val nextInning = if (completedRound && !gameComplete) inning + 1 else inning
         return copy(
             inning = nextInning,
-            target = nextInning,
+            target = targetForBaseballInning(nextInning),
             activeParticipant = nextParticipant,
             entries = updatedEntries,
             pendingScore = "",
             errorMessage = null,
-            isComplete = nextInning == 9 && updatedEntries.values.sumOf { it.size } >= participants.size * 9
+            isComplete = gameComplete
         )
     }
+
+    private fun targetForBaseballInning(inningNumber: Int): Int =
+        when {
+            inningNumber <= 0 -> 1
+            inningNumber <= 20 -> inningNumber
+            else -> 20
+        }
 }

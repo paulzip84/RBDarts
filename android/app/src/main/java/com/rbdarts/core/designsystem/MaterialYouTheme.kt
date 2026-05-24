@@ -36,23 +36,23 @@ private val RBDartsLightScheme = lightColorScheme(
 )
 
 private val RBDartsDarkScheme = darkColorScheme(
-    primary = Color(0xFF9EDDB2),
-    onPrimary = Color(0xFF00391E),
-    primaryContainer = Color(0xFF00522D),
-    onPrimaryContainer = Color(0xFFB9F0CC),
-    secondary = Color(0xFFC5C98D),
-    onSecondary = Color(0xFF2E3300),
-    secondaryContainer = Color(0xFF444914),
-    onSecondaryContainer = Color(0xFFE1E5A7),
-    tertiary = Color(0xFFFFB4A6),
-    onTertiary = Color(0xFF541D12),
-    tertiaryContainer = Color(0xFF703528),
-    onTertiaryContainer = Color(0xFFFFDAD3),
+    primary = Color(0xFF22B8A7),
+    onPrimary = Color(0xFF062622),
+    primaryContainer = Color(0xFF273449),
+    onPrimaryContainer = Color(0xFFF8FAFC),
+    secondary = Color(0xFF86D8D0),
+    onSecondary = Color(0xFF072825),
+    secondaryContainer = Color(0xFF16453F),
+    onSecondaryContainer = Color(0xFFD5FFFA),
+    tertiary = Color(0xFFFFC857),
+    onTertiary = Color(0xFF2D2100),
+    tertiaryContainer = Color(0xFF4A3900),
+    onTertiaryContainer = Color(0xFFFFE5A1),
     error = Color(0xFFFFB4AB),
-    background = Color(0xFF111411),
-    surface = Color(0xFF111411),
-    surfaceVariant = Color(0xFF414941),
-    outline = Color(0xFF8B9389)
+    background = Color(0xFF101828),
+    surface = Color(0xFF172032),
+    surfaceVariant = Color(0xFF202A3A),
+    outline = Color(0xFF344055)
 )
 
 private val RBDartsShapes = Shapes(

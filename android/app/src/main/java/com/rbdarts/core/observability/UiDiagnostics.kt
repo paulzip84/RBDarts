@@ -16,6 +16,11 @@ object UiDiagnosticNames {
     const val LoginProviderFailed = "android_login_provider_failed"
     const val LoginHelpSelected = "android_login_help_selected"
     const val RouteSelected = "android_ui_route_selected"
+    const val NavMenuOpened = "android_nav_menu_opened"
+    const val NavMenuClosed = "android_nav_menu_closed"
+    const val NavDestinationSelected = "android_nav_destination_selected"
+    const val NavSignOutSelected = "android_nav_sign_out_selected"
+    const val NavProtectedRedirect = "android_nav_protected_redirect"
     const val HandicapEdited = "android_ui_handicap_edited"
     const val ScoringEntrySubmitted = "android_ui_score_entry_submitted"
     const val ScoringEntryRejected = "android_ui_score_entry_rejected"
@@ -107,6 +112,35 @@ object UiDiagnostics {
     fun routeSelected(routeName: String): DiagnosticEvent =
         event(UiDiagnosticNames.RouteSelected, attributes = mapOf("route" to routeName))
 
+    fun navMenuOpened(): DiagnosticEvent =
+        event(UiDiagnosticNames.NavMenuOpened, attributes = mapOf("menuState" to "opened"))
+
+    fun navMenuClosed(result: String = "dismissed"): DiagnosticEvent =
+        event(UiDiagnosticNames.NavMenuClosed, attributes = mapOf("menuState" to "closed", "result" to result))
+
+    fun navDestinationSelected(destination: String, timingBucket: String = "lt_250ms"): DiagnosticEvent =
+        event(
+            UiDiagnosticNames.NavDestinationSelected,
+            attributes = mapOf(
+                "destination" to destination.toSafeDestination(),
+                "result" to "selected",
+                "timingBucket" to timingBucket
+            )
+        )
+
+    fun navSignOutSelected(): DiagnosticEvent =
+        event(
+            UiDiagnosticNames.NavSignOutSelected,
+            attributes = mapOf("destination" to "login", "result" to "sign_out")
+        )
+
+    fun navProtectedRedirect(destination: String): DiagnosticEvent =
+        event(
+            UiDiagnosticNames.NavProtectedRedirect,
+            DiagnosticSeverity.Warning,
+            mapOf("destination" to destination.toSafeDestination(), "result" to "redirected")
+        )
+
     fun handicapEdited(hasOverride: Boolean): DiagnosticEvent =
         event(UiDiagnosticNames.HandicapEdited, attributes = mapOf("override" to hasOverride.toString()))
 
@@ -119,5 +153,18 @@ object UiDiagnostics {
     fun privacySafeAttributes(attributes: Map<String, String>): Map<String, String> =
         attributes.filterKeys { key ->
             redactedAttributeNames.none { forbidden -> key.contains(forbidden, ignoreCase = true) }
+        }
+
+    private fun String.toSafeDestination(): String =
+        when (lowercase()) {
+            "home" -> "home"
+            "gametype", "game_type", "game type" -> "game_type"
+            "players" -> "players"
+            "seasons" -> "seasons"
+            "handicaps" -> "handicaps"
+            "scoring" -> "scoring"
+            "settings" -> "settings"
+            "login" -> "login"
+            else -> "home"
         }
 }

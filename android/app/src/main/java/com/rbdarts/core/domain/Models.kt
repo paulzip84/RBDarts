@@ -13,6 +13,126 @@ enum class AverageUpdateRule { AfterMatch }
 enum class ExtraInningsRule { Enabled, Disabled, LeagueTieRule }
 enum class TieBonusRule { NoBonus, SplitBonus, TiebreakerGame, RawScoreTiebreak }
 enum class CorrectionStatus { Requested, Approved, Rejected, Applied }
+enum class Post20TieRule { Repeat20, RestartAt1, BullseyeTiebreaker }
+enum class DartRing { Miss, Single, Double, Triple, OuterBull, InnerBull }
+enum class DartValidity { Valid, WrongNumber, BounceOut, FellOut, FoulLine, OutOfTurn }
+enum class BaseballParticipantKind { Player, Team }
+enum class BaseballAnalyticsSubject { Player, Team }
+
+data class BaseballRuleSet(
+    val ruleSetId: String = "baseball-standard",
+    val name: String = "Standard Baseball Darts",
+    val regulationInnings: Int = 9,
+    val dartsPerTurn: Int = 3,
+    val singleValue: Int = 1,
+    val doubleValue: Int = 2,
+    val tripleValue: Int = 3,
+    val extraInningsEnabled: Boolean = true,
+    val post20TieRule: Post20TieRule = Post20TieRule.Repeat20,
+    val bullseyeBonusEnabled: Boolean = false,
+    val seventhInningStretchEnabled: Boolean = false,
+    val mercyRuleEnabled: Boolean = false,
+    val handicapEnabled: Boolean = false
+)
+
+data class BaseballDartThrow(
+    val dartThrowId: String,
+    val dartIndex: Int,
+    val targetNumber: Int,
+    val landedNumber: Int?,
+    val ring: DartRing,
+    val validity: DartValidity = DartValidity.Valid
+)
+
+data class BaseballTurn(
+    val turnId: String,
+    val gameId: String,
+    val inningNumber: Int,
+    val targetNumber: Int,
+    val participantId: String,
+    val teamId: String?,
+    val playerId: String,
+    val lineupSlot: Int,
+    val darts: List<BaseballDartThrow>,
+    val enteredByUserId: String,
+    val createdAt: Instant,
+    val updatedAt: Instant
+)
+
+data class BaseballParticipant(
+    val participantId: String,
+    val displayName: String,
+    val kind: BaseballParticipantKind,
+    val teamId: String? = null,
+    val playerIds: List<String> = emptyList(),
+    val lineupOrder: List<String> = emptyList(),
+    val startingHandicap: Int = 0
+)
+
+data class BaseballParticipantSummary(
+    val participantId: String,
+    val displayName: String,
+    val total: Int,
+    val inningTotals: Map<Int, Int>,
+    val zeroCount: Int,
+    val nineCount: Int
+)
+
+data class BaseballGameSummary(
+    val participantSummaries: List<BaseballParticipantSummary>,
+    val winnerIds: List<String>,
+    val margin: Int,
+    val inningsPlayed: Int,
+    val needsExtraInning: Boolean,
+    val currentTarget: Int
+)
+
+data class BaseballScoreboardSnapshot(
+    val gameId: String,
+    val currentInning: Int,
+    val targetNumber: Int,
+    val currentThrowerId: String,
+    val currentThrowerDisplayName: String,
+    val playerInningScore: Int,
+    val playerTotal: Int,
+    val teamInningScore: Int?,
+    val teamTotal: Int?,
+    val leaderId: String?,
+    val leadMargin: Int,
+    val remainingInnings: Int,
+    val needsExtraInning: Boolean,
+    val gameStatus: GameStatus
+)
+
+data class BaseballAnalyticsSnapshot(
+    val subjectId: String,
+    val subjectType: BaseballAnalyticsSubject,
+    val averageScorePerInning: Double?,
+    val highestInningScore: Int?,
+    val shutoutInnings: Int,
+    val tripleRate: Double?,
+    val winPercentage: Double?,
+    val projectedFinalScore: Double?,
+    val comebackProbability: Double?,
+    val consistency: Double?,
+    val bestTargetNumbers: List<Int>,
+    val weakestTargetNumbers: List<Int>,
+    val isEstimate: Boolean
+)
+
+data class BaseballSubstitution(
+    val substitutionId: String,
+    val gameId: String,
+    val teamId: String,
+    val outPlayerId: String,
+    val inPlayerId: String,
+    val effectiveInning: Int,
+    val effectiveTurn: Int,
+    val authorizedByUserId: String,
+    val authorizedByRole: LeagueRole,
+    val createdAt: Instant,
+    val reason: String
+)
 
 data class UserAccount(
     val userId: String,

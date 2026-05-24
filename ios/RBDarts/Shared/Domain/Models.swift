@@ -76,6 +76,212 @@ public enum CorrectionStatus: String, Codable, Sendable {
     case applied
 }
 
+public enum Post20TieRule: String, Codable, Sendable {
+    case repeat20
+    case restartAt1
+    case bullseyeTiebreaker
+}
+
+public enum DartRing: String, Codable, Sendable {
+    case miss
+    case single
+    case double
+    case triple
+    case outerBull
+    case innerBull
+}
+
+public enum DartValidity: String, Codable, Sendable {
+    case valid
+    case wrongNumber
+    case bounceOut
+    case fellOut
+    case foulLine
+    case outOfTurn
+}
+
+public enum BaseballParticipantKind: String, Codable, Sendable {
+    case player
+    case team
+}
+
+public enum BaseballAnalyticsSubject: String, Codable, Sendable {
+    case player
+    case team
+}
+
+public struct BaseballRuleSet: Codable, Equatable, Sendable {
+    public var ruleSetId: String
+    public var name: String
+    public var regulationInnings: Int
+    public var dartsPerTurn: Int
+    public var singleValue: Int
+    public var doubleValue: Int
+    public var tripleValue: Int
+    public var extraInningsEnabled: Bool
+    public var post20TieRule: Post20TieRule
+    public var bullseyeBonusEnabled: Bool
+    public var seventhInningStretchEnabled: Bool
+    public var mercyRuleEnabled: Bool
+    public var handicapEnabled: Bool
+
+    public init(
+        ruleSetId: String = "baseball-standard",
+        name: String = "Standard Baseball Darts",
+        regulationInnings: Int = 9,
+        dartsPerTurn: Int = 3,
+        singleValue: Int = 1,
+        doubleValue: Int = 2,
+        tripleValue: Int = 3,
+        extraInningsEnabled: Bool = true,
+        post20TieRule: Post20TieRule = .repeat20,
+        bullseyeBonusEnabled: Bool = false,
+        seventhInningStretchEnabled: Bool = false,
+        mercyRuleEnabled: Bool = false,
+        handicapEnabled: Bool = false
+    ) {
+        self.ruleSetId = ruleSetId
+        self.name = name
+        self.regulationInnings = regulationInnings
+        self.dartsPerTurn = dartsPerTurn
+        self.singleValue = singleValue
+        self.doubleValue = doubleValue
+        self.tripleValue = tripleValue
+        self.extraInningsEnabled = extraInningsEnabled
+        self.post20TieRule = post20TieRule
+        self.bullseyeBonusEnabled = bullseyeBonusEnabled
+        self.seventhInningStretchEnabled = seventhInningStretchEnabled
+        self.mercyRuleEnabled = mercyRuleEnabled
+        self.handicapEnabled = handicapEnabled
+    }
+}
+
+public struct BaseballDartThrow: Codable, Equatable, Sendable {
+    public let dartThrowId: String
+    public let dartIndex: Int
+    public let targetNumber: Int
+    public let landedNumber: Int?
+    public let ring: DartRing
+    public let validity: DartValidity
+
+    public init(dartThrowId: String, dartIndex: Int, targetNumber: Int, landedNumber: Int?, ring: DartRing, validity: DartValidity = .valid) {
+        self.dartThrowId = dartThrowId
+        self.dartIndex = dartIndex
+        self.targetNumber = targetNumber
+        self.landedNumber = landedNumber
+        self.ring = ring
+        self.validity = validity
+    }
+}
+
+public struct BaseballTurn: Codable, Equatable, Sendable {
+    public let turnId: String
+    public let gameId: String
+    public let inningNumber: Int
+    public let targetNumber: Int
+    public let participantId: String
+    public let teamId: String?
+    public let playerId: String
+    public let lineupSlot: Int
+    public let darts: [BaseballDartThrow]
+    public let enteredByUserId: String
+    public let createdAt: Date
+    public let updatedAt: Date
+}
+
+public struct BaseballParticipant: Codable, Equatable, Sendable {
+    public let participantId: String
+    public var displayName: String
+    public var kind: BaseballParticipantKind
+    public var teamId: String?
+    public var playerIds: [String]
+    public var lineupOrder: [String]
+    public var startingHandicap: Int
+
+    public init(
+        participantId: String,
+        displayName: String,
+        kind: BaseballParticipantKind,
+        teamId: String? = nil,
+        playerIds: [String] = [],
+        lineupOrder: [String] = [],
+        startingHandicap: Int = 0
+    ) {
+        self.participantId = participantId
+        self.displayName = displayName
+        self.kind = kind
+        self.teamId = teamId
+        self.playerIds = playerIds
+        self.lineupOrder = lineupOrder
+        self.startingHandicap = startingHandicap
+    }
+}
+
+public struct BaseballParticipantSummary: Codable, Equatable, Sendable {
+    public let participantId: String
+    public let displayName: String
+    public let total: Int
+    public let inningTotals: [Int: Int]
+    public let zeroCount: Int
+    public let nineCount: Int
+}
+
+public struct BaseballGameSummary: Codable, Equatable, Sendable {
+    public let participantSummaries: [BaseballParticipantSummary]
+    public let winnerIds: [String]
+    public let margin: Int
+    public let inningsPlayed: Int
+    public let needsExtraInning: Bool
+    public let currentTarget: Int
+}
+
+public struct BaseballScoreboardSnapshot: Codable, Equatable, Sendable {
+    public let gameId: String
+    public let currentInning: Int
+    public let targetNumber: Int
+    public let currentThrowerId: String
+    public let currentThrowerDisplayName: String
+    public let playerInningScore: Int
+    public let playerTotal: Int
+    public let teamInningScore: Int?
+    public let teamTotal: Int?
+    public let leaderId: String?
+    public let leadMargin: Int
+    public let remainingInnings: Int
+    public let needsExtraInning: Bool
+    public let gameStatus: GameStatus
+}
+
+public struct BaseballAnalyticsSnapshot: Codable, Equatable, Sendable {
+    public let subjectId: String
+    public let subjectType: BaseballAnalyticsSubject
+    public let averageScorePerInning: Double?
+    public let highestInningScore: Int?
+    public let shutoutInnings: Int
+    public let tripleRate: Double?
+    public let winPercentage: Double?
+    public let projectedFinalScore: Double?
+    public let comebackProbability: Double?
+    public let consistency: Double?
+    public let bestTargetNumbers: [Int]
+    public let weakestTargetNumbers: [Int]
+    public let isEstimate: Bool
+}
+
+public struct BaseballSubstitution: Codable, Equatable, Sendable {
+    public let substitutionId: String
+    public let gameId: String
+    public let teamId: String
+    public let outPlayerId: String
+    public let inPlayerId: String
+    public let effectiveInning: Int
+    public let effectiveTurn: Int
+    public let authorizedByUserId: String
+    public let authorizedByRole: LeagueRole
+    public let createdAt: Date
+    public let reason: String
+}
+
 public struct UserAccount: Identifiable, Codable, Equatable, Sendable {
     public var id: String { userId }
     public let userId: String

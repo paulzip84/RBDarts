@@ -1,0 +1,36 @@
+{
+  "name": "baseball-invalid-darts",
+  "regulationInnings": 9,
+  "extraInningsEnabled": true,
+  "post20TieRule": "repeat20",
+  "participants": [
+    { "id": "player-a", "displayName": "Avery", "kind": "player" },
+    { "id": "player-b", "displayName": "Blake", "kind": "player" }
+  ],
+  "turns": [
+    {
+      "id": "a-7",
+      "inning": 7,
+      "target": 7,
+      "participantId": "player-a",
+      "teamId": null,
+      "playerId": "player-a",
+      "darts": [
+        { "index": 1, "target": 7, "landedNumber": null, "ring": "miss", "validity": "valid", "score": 0 },
+        { "index": 2, "target": 7, "landedNumber": 7, "ring": "triple", "validity": "bounceOut", "score": 0 },
+        { "index": 3, "target": 7, "landedNumber": 20, "ring": "triple", "validity": "wrongNumber", "score": 0 }
+      ]
+    }
+  ],
+  "expected": {
+    "totals": {
+      "player-a": 0,
+      "player-b": 0
+    },
+    "winnerIds": [],
+    "margin": 0,
+    "inningsPlayed": 9,
+    "needsExtraInning": false,
+    "currentTarget": 1
+  }
+}

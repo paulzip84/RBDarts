@@ -1,0 +1,19 @@
+{
+  "name": "baseball-standard-ruleset",
+  "regulationInnings": 9,
+  "extraInningsEnabled": true,
+  "post20TieRule": "repeat20",
+  "dartsPerTurn": 3,
+  "participants": [
+    { "id": "player-a", "displayName": "Avery", "kind": "player" },
+    { "id": "player-b", "displayName": "Blake", "kind": "player" }
+  ],
+  "expected": {
+    "totals": {},
+    "winnerIds": [],
+    "margin": 0,
+    "inningsPlayed": 9,
+    "needsExtraInning": false,
+    "currentTarget": 1
+  }
+}

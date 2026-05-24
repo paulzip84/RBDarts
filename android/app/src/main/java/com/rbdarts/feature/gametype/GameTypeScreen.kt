@@ -2,11 +2,6 @@ package com.rbdarts.feature.gametype
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +12,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.rbdarts.app.RBDartsRoute
+import com.rbdarts.core.designsystem.RBDartsAuthenticatedPanel
+import com.rbdarts.core.designsystem.RBDartsAuthenticatedScreen
 import com.rbdarts.core.designsystem.RBDartsInfoCard
 import com.rbdarts.core.designsystem.RBDartsPrimaryAction
 import com.rbdarts.core.designsystem.RBDartsSecondaryAction
@@ -31,30 +28,23 @@ fun GameTypeScreen(
     var selectedType by rememberSaveable { mutableStateOf(BaseballDartsGameType.Standalone.name) }
     val selected = BaseballDartsGameType.valueOf(selectedType)
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
+    RBDartsAuthenticatedScreen(modifier = modifier) {
         RBDartsSectionHeader(
             title = "Game type",
             supportingText = "Choose the scoring context before sending players to the board."
         )
         BaseballDartsGameType.entries.forEach { option ->
-            Card {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(option.label, style = MaterialTheme.typography.titleMedium)
-                    Text(option.supportingText, style = MaterialTheme.typography.bodyMedium)
-                    RBDartsSecondaryAction(
-                        label = if (selected == option) "Selected" else "Choose ${option.label}",
-                        onClick = { selectedType = option.name }
-                    )
-                }
+            RBDartsAuthenticatedPanel {
+                Text(option.label, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    option.supportingText,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                RBDartsSecondaryAction(
+                    label = if (selected == option) "Selected" else "Choose ${option.label}",
+                    onClick = { selectedType = option.name }
+                )
             }
         }
         RBDartsInfoCard(
